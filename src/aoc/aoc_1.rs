@@ -1,4 +1,3 @@
-use std::hint::unreachable_unchecked;
 
 pub fn solve_1(input :&'static[u8]) -> u64 {
     let mut dial = 50;
@@ -39,7 +38,7 @@ pub fn solve_1_f(input :&'static[u8]) -> u32 {
     let mut dial = 50;
     let mut answer =0;
 
-    let mut index = 0;
+
     for line in input.split(|&b| b == b'\n') {
         let len = line.len();
 
