@@ -13,3 +13,8 @@ harness = false
 [[bench]]
 name = "bench_aoc_2"
 harness = false
+[[bench]]
+name = "bench_aoc_3"
+harness = false
+[dependencies]
+strength_reduce = "0.2.4"
