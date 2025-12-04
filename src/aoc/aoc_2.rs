@@ -1,4 +1,4 @@
-use strength_reduce::StrengthReducedU64;
+
 pub fn solve_p1(input: &str) -> u64 {
     let mut answer = 0;
     for line in input.split(',') {
