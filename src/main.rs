@@ -11,13 +11,21 @@ fn main() {
     let answer = aoc_3::solve_p1_fast(input2);
     println!("{}", answer);
      */
-
+    /*
     let input = include_bytes!("aoc/input/full_input_aoc4.txt");
-    let answer = aoc_4::solve_p2_f(input);
+    let answer = aoc_4::solve_p1_f(input);
     println!("{}", answer);
 
-    let input = include_str!("aoc/input/full_input_aoc4.txt");
-    let answer = aoc_4::solve_p2(input);
+    let input = include_bytes!("aoc/input/full_input_aoc4.txt");
+    let answer = aoc_4::solve_p1(input);
+    println!("{}", answer);
+     */
+    let input = include_str!("aoc/input/full_input_aoc5.txt");
+    let answer = aoc_5::solve_p1(input);
+    println!("{}", answer);
+
+    let input = include_str!("aoc/input/full_input_aoc5.txt");
+    let answer = aoc_5::solve_p2(input);
     println!("{}", answer);
 }
 

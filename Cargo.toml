@@ -21,6 +21,10 @@ harness = false
 [[bench]]
 name = "bench_aoc_4"
 harness = false
+[[bench]]
+name = "bench_aoc_5"
+harness = false
+
 [dependencies]
 [profile.bench]
 opt-level = 3
