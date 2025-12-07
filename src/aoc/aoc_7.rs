@@ -39,33 +39,43 @@ pub fn solve_p1(input: &str) -> u64 {
     answer
 }
 
-pub fn solve_p2(input: &str) -> u128 {
+pub fn solve_p2(input: &str) -> u64 {
     let mut answer = 0;
-    let mut data = Vec::new();
+    let mut data = Vec::with_capacity(256);
     for line in input.lines() {
-        let chars = line.chars().collect::<Vec<char>>();
+        let chars = line.bytes().map(|mut x| {if x == b'.' {x = 0; x as u64} else {x as u64}}).collect::<Vec<u64>>();
         data.push(chars);
     }
     let start_idx = data[0].iter().len() / 2 ;
-    data[1][start_idx] = '|';
-
-    answer = traverse(&(1, start_idx), &data);
+    data[0][start_idx] = 1;
 
 
-    answer
-}
-fn traverse(idx : &(usize, usize), data_in: &Vec<Vec<char>>) -> u128 {
-    let mut count = 0;
-    if idx.0 +1 >= data_in.len() -6 {
-        1
-    }else {
-        if data_in[idx.0 + 1][idx.1] == '^' {
-            count += traverse(&(idx.0+2, idx.1 -1), &data_in);
-            count += traverse(&(idx.0+2, idx.1 +1), &data_in);
-            return count;
+    for (i,line) in data.clone().iter().enumerate() {
+        //println!("{:?}", data[i]);
+        for (j,char) in line.iter().enumerate() {
+            //println!("{}", data[i][j]);
+            if data[i][j] == 94 {
+                //println!("{}", data[i][j]);
+                if data[i-1][j] != 0 {
+                    //println!("{}", data[i-1][j]);
+                    let power = data[i-1][j];
+                    data[i][j-1] += power;
+                    data[i][j+1] += power;
+                    data[i+1][j-1] = data[i][j-1];
+                    data[i+1][j+1] = data[i][j+1];
+
+                }
+            }
+            else if data[i][j] != 0 {
+                //println!("{}", data[i][j]);
+                if i+1 < data.len() {
+                    if data[i+1][j] != 94 {
+                        data[i+1][j] = data[i][j];
+                    }
+                }
+            }
         }
-        count += traverse(&(idx.0+1, idx.1), &data_in);
-        count
+        answer = data[data.len()-1].iter().sum();
     }
-
+    answer
 }

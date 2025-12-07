@@ -19,6 +19,8 @@ fn main() {
     let input = include_bytes!("aoc/input/full_input_aoc4.txt");
     let answer = aoc_4::solve_p1(input);
     println!("{}", answer);
+
+
      */
     /*
     let input = include_str!("aoc/input/full_input_aoc5.txt");
@@ -44,7 +46,7 @@ fn main() {
     let input = include_str!("aoc/input/full_input_aoc7.txt");
     let answer = aoc_7::solve_p1(input);
     println!("answer: {}", answer);
-    let input = include_str!("aoc/input/test_input_aoc7.txt");
+    let input = include_str!("aoc/input/full_input_aoc7.txt");
     let answer = aoc_7::solve_p2(input);
     println!("answer: {}", answer);
 
@@ -103,3 +105,32 @@ fn test_aoc_3_part2() {
         172787336861064
     );
 }
+#[test]
+fn test_aoc_4_part1() {
+    assert_eq!(
+        aoc_4::solve_p1(include_bytes!("aoc/input/full_input_aoc4.txt")),
+        1486
+    );
+}
+#[test]
+fn test_aoc_4_part2() {
+    assert_eq!(
+        aoc_4::solve_p2_f(include_bytes!("aoc/input/full_input_aoc4.txt")),
+        9024
+    );
+}
+#[test]
+fn test_aoc_5_part1() {
+    assert_eq!(
+        aoc_5::solve_p1(include_str!("aoc/input/full_input_aoc5.txt")),
+        865
+    );
+}
+#[test]
+fn test_aoc_5_part2() {
+    assert_eq!(
+        aoc_5::solve_p2(include_str!("aoc/input/full_input_aoc5.txt")),
+        352556672963116
+    );
+}
+
