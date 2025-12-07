@@ -30,6 +30,7 @@ fn main() {
     println!("{}", answer);
 
      */
+    /*
     let input = include_str!("aoc/input/full_input_aoc6.txt");
     let answer = aoc_6::solve_p1(input);
     println!("answer: {}", answer);
@@ -37,6 +38,16 @@ fn main() {
     let input = include_str!("aoc/input/full_input_aoc6.txt");
     let answer = aoc_6::solve_p2(input);
     println!("answer: {}", answer);
+
+     */
+
+    let input = include_str!("aoc/input/full_input_aoc7.txt");
+    let answer = aoc_7::solve_p1(input);
+    println!("answer: {}", answer);
+    let input = include_str!("aoc/input/test_input_aoc7.txt");
+    let answer = aoc_7::solve_p2(input);
+    println!("answer: {}", answer);
+
 }
 
 #[test]
