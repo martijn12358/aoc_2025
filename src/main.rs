@@ -20,13 +20,23 @@ fn main() {
     let answer = aoc_4::solve_p1(input);
     println!("{}", answer);
      */
+    /*
     let input = include_str!("aoc/input/full_input_aoc5.txt");
     let answer = aoc_5::solve_p1(input);
     println!("{}", answer);
 
-    let input = include_str!("aoc/input/full_input_aoc5.txt");
+    let input = include_str!("aoc/input/test_input_aoc5.txt");
     let answer = aoc_5::solve_p2(input);
     println!("{}", answer);
+
+     */
+    let input = include_str!("aoc/input/full_input_aoc6.txt");
+    let answer = aoc_6::solve_p1(input);
+    println!("answer: {}", answer);
+
+    let input = include_str!("aoc/input/full_input_aoc6.txt");
+    let answer = aoc_6::solve_p2(input);
+    println!("answer: {}", answer);
 }
 
 #[test]
