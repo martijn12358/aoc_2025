@@ -1,3 +1,4 @@
+use std::simd::prelude::*;
 pub fn solve_p1(input: &[u8]) -> u32 {
     let mut answer = 0;
     let mut i = 1;
@@ -36,37 +37,58 @@ pub fn solve_p1(input: &[u8]) -> u32 {
 
 pub fn solve_p1_fast(input: &[u8]) -> u32 {
     let mut answer = 0;
-    let mut i = 1;
-    let len = input.len();
+    let size = input.len()/100 -1;
+    //let size = 1;
+    const LANES: usize = 33;
+    let mut idx = 0;
+    type SimdVec = Simd<u8, LANES>;
+    for j in 0..size {
+        let line = &input[idx..idx+100];
+        //println!("{:?}", line);
+        for i in (1..=9) {
+            let target = SimdVec::splat(58-i);
 
-    let mut num = input[0];
-    let mut num2 = input[1];
-    while i < len {
-        let mut j = i;
-        num = input[j-1];
-        num2 = input[j];
+            let (prefix, chunks, suffix) = line.as_simd::<LANES>();
 
-        while input[j+1] != 10 {
+            // 4. Process the main SIMD chunks
+            let mask :u128 = (chunks[0].simd_eq(target).to_bitmask() as u128) | (chunks[1].simd_eq(target).to_bitmask() as u128) << LANES | (chunks[2].simd_eq(target).to_bitmask() as u128) << 2*LANES ;
+            let count = mask.count_ones() ;
+           // println!("{:?} ",  count);
 
-            if input[j] > num {
-                num = input[j];
-                num2 = input[j + 1];
-            } else if input[j] > num2 {
-                num2 = input[j];
-            }
-            j +=1;
-            if j+2 == len {
+            if count >= 2 {
+                answer += ((10 * (10 - i)) + 10 -i) as u32;
+                break;
+            } else if count == 1 {
+                if 58-i == suffix[0] {
+                    answer += ((10 * (10-i)) + suffix[0] - 48) as u32;
+                    break;
+                }
+                if (58-i)-1 == suffix[0] {
+                    answer += ((10 * (10-i)) + suffix[0] - 48) as u32;
+                    break;
+                }
+                let idx = mask.trailing_zeros() as usize +1;
+                //println!("{:?}, {}, {}", line, idx, 58-i);
+                let line = &line[idx..100];
+                let mut num = suffix[0];
+                //println!("{:?}", line);
+                for v in line.iter() {
+                    if v > &num {
+                        num = *v;
+                    }
+                }
+                //println!("{}", num);
+                answer += (((10 - i) * 10) + num -48) as u32;
                 break;
             }
 
         }
+        idx += 101;
 
-        if input[j] > num2 {
-            num2 =input[j ];
-        }
-        answer += (((num - 48) * 10) + num2 - 48) as u32;
+    // 5. Handle the remaining elements (head and tail) via standard scalar iteration
+    // These are the parts of the array that didn't fit into a perfect 32-byte chunk
 
-        i = j + 3;
+        //println!("nines {}", count + scalar_check(prefix) + scalar_check(suffix));
     }
 
     answer
@@ -103,7 +125,6 @@ pub fn solve_p2(input: &[u8]) -> u64 {
 
 pub fn solve_p2_fast(input: &[u8]) -> u64 {
     let mut answer = 0;
-
     for line in input.split(|&x| x == 10) {
         let mut end = line.len() - 12;
         let total = 12;
