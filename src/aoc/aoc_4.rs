@@ -1,3 +1,4 @@
+
 use std::simd::prelude::*;
 pub fn solve_p1(input: &[u8]) -> u64 {
     let mut answer = 0;
@@ -68,11 +69,16 @@ pub fn solve_p1_f(input: &[u8]) -> u64 {
     const LANES: usize = 8;
     type SimdVec = Simd<u8, LANES>;
 
+    let mut data = [0;8];
+
+    let offsets = usizex8::from_array([0, 1, 2, 140, 142, 240, 241, 242]);
+
     for i in len+1..input.len()-len-1 {
         if input[i] == b'@' {
-            let data= [input[i-1], input[i+1], input[i+len], input[i +len+1], input[i+len-1], input[i-(len+1)], input[i-(len -1)], input[i-len]];
-            let (pre, chk, post) = data.as_simd();
-            let count = chk[0].simd_eq(target).to_bitmask().count_ones();
+            data= [input[i-1], input[i+1], input[i+len], input[i +len +1], input[i+len -1], input[i-len], input[i -(len +1)], input[i-(len -1)]];
+            let chk = SimdVec::from_array(data);
+            let count = chk.simd_eq(target).to_bitmask().count_ones();
+            //let count = vals.simd_eq(target).to_bitmask().count_ones();
             if count <4 {
                 answer += 1;
             }
@@ -80,9 +86,9 @@ pub fn solve_p1_f(input: &[u8]) -> u64 {
     }
     for i in 1..len {
         if input[i] == b'@' {
-            let data= [input[i-1], input[i+1], input[i+len], input[i +len +1], input[i+len -1], 0,0,0];
-            let (pre, chk, post) = data.as_simd();
-            let count = chk[0].simd_eq(target).to_bitmask().count_ones();
+            data= [input[i-1], input[i+1], input[i+len], input[i +len +1], input[i+len -1], 0,0,0];
+            let chk = SimdVec::from_array(data);
+            let count = chk.simd_eq(target).to_bitmask().count_ones();
             if count <4 {
                 answer += 1;
             }
@@ -90,9 +96,9 @@ pub fn solve_p1_f(input: &[u8]) -> u64 {
     }
     for i in input.len()-len..input.len()-1 {
         if input[i] == b'@' {
-            let data= [input[i-1], input[i+1], input[i-len], input[i -(len +1)], input[i-(len-1)], 0,0,0];
-            let (pre, chk, post) = data.as_simd();
-            let count = chk[0].simd_eq(target).to_bitmask().count_ones();
+            data= [input[i-1], input[i+1], input[i-len], input[i -(len +1)], input[i-(len-1)], 0,0,0];
+            let chk = SimdVec::from_array(data);
+            let count = chk.simd_eq(target).to_bitmask().count_ones();
             if count <4 {
 
                 answer += 1;
@@ -100,9 +106,9 @@ pub fn solve_p1_f(input: &[u8]) -> u64 {
         }
     }
     if input[len] == b'@' {
-        let data= [input[len-1], input[len+1], input[0], 0, input[1], 0,0,0];
-        let (pre, chk, post) = data.as_simd();
-        let count = chk[0].simd_eq(target).to_bitmask().count_ones();
+        data= [input[len-1], input[len+1], input[0], 0, input[1], 0,0,0];
+        let chk = SimdVec::from_array(data);
+        let count = chk.simd_eq(target).to_bitmask().count_ones();
         if count <4 {
 
             answer += 1;
@@ -110,9 +116,9 @@ pub fn solve_p1_f(input: &[u8]) -> u64 {
     }
     let idx = input.len()-len -1;
     if input[idx] == b'@' {
-        let data= [input[idx-1], 0, input[idx - len], input[idx + len], input[idx - (len + 1)], input[idx + (len -1)],0,0];
-        let (pre, chk, post) = data.as_simd();
-        let count = chk[0].simd_eq(target).to_bitmask().count_ones();
+        data= [input[idx-1], 0, input[idx - len], input[idx + len], input[idx - (len + 1)], input[idx + (len -1)],0,0];
+        let chk = SimdVec::from_array(data);
+        let count = chk.simd_eq(target).to_bitmask().count_ones();
         if count <4 {
 
             answer += 1;
@@ -126,6 +132,7 @@ pub fn solve_p1_f(input: &[u8]) -> u64 {
     }
     answer
 }
+
 
 pub fn solve_p2(input: &str) -> u16 {
     let mut answer = 0;
