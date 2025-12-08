@@ -1,4 +1,8 @@
-#![feature(portable_simd)] // Enable the nightly feature
+#![feature(portable_simd)]
+#![feature(exact_length_collection)]
+extern crate core;
+
+// Enable the nightly feature
 pub mod aoc;
 use crate::aoc::*;
 
@@ -42,14 +46,17 @@ fn main() {
     println!("answer: {}", answer);
 
      */
-
+    /*
     let input = include_str!("aoc/input/full_input_aoc7.txt");
     let answer = aoc_7::solve_p1(input);
     println!("answer: {}", answer);
-    let input = include_str!("aoc/input/full_input_aoc7.txt");
+    let input = include_bytes!("aoc/input/full_input_aoc7.txt");
     let answer = aoc_7::solve_p2(input);
     println!("answer: {}", answer);
-
+    */
+    let input = include_str!("aoc/input/test_input_aoc8.txt");
+    let answer = aoc_8::solve_p1(input);
+    println!("answer: {}", answer);
 }
 
 #[test]
